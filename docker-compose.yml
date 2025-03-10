@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  nginx22:
+    image: nginx:alpine
+    container_name: nginx22
+    ports:
+      - "9090:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - luozhuohua11
+      - luozhuohua22
+    networks:
+      - vue-network
+
+  luozhuohua11:
+    build: ./luozhuohua
+    container_name: luozhuohua11
+    networks:
+      - vue-network
+
+  luozhuohua22:
+    build: ./luozhuohua2
+    container_name: luozhuohua22
+    networks:
+      - vue-network
+
+networks:
+  vue-network:
+    driver: bridge
