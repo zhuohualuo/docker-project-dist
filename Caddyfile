@@ -1,4 +1,6 @@
 luozhuohua.top {
+    reverse_proxy index:80  # 让 `luozhuohua.top` 直接访问 `index`
+
     handle_path /renyimen/* {
         reverse_proxy renyimen:80
     }
