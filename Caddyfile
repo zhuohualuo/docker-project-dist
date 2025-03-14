@@ -1,0 +1,25 @@
+luozhuohua.top {
+    handle_path /renyimen/* {
+        reverse_proxy renyimen:80
+    }
+
+    handle_path /luozhuohua/* {
+        reverse_proxy luozhuohua11:80
+    }
+    
+    handle_path /luozhuohua2/* {
+        reverse_proxy luozhuohua22:80
+    }
+    
+    handle_path /luozhuohua3/* {
+        reverse_proxy luozhuohua33:80
+    }
+
+    handle_path /luozhuohua4/* {
+        reverse_proxy luozhuohua44:80
+    }
+
+    handle_path /luozhuohua5/* {
+        reverse_proxy luozhuohua55:80
+    }
+}

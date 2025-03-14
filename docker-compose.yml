@@ -1,63 +1,68 @@
 version: '3.8'
 
 services:
-  nginx22:
-    image: nginx:alpine
-    container_name: nginx22
+  caddy:
+    image: caddy:latest
+    container_name: caddy
+    restart: unless-stopped
     ports:
-      - "8888:80"  # 将宿主机的 9090 端口映射到容器的 80 端口
+      - '80:80'
+      - '443:443'
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf  # 挂载自定义 Nginx 配置文件
-      - ./logs/nginx:/var/log/nginx  # 挂载 Nginx 日志目录（可选）
-    depends_on:
-      - luozhuohua11
-      - luozhuohua22
-      - luozhuohua33
-      - luozhuohua44
-      - luozhuohua55
+      - ./Caddyfile:/etc/caddy/Caddyfile # 挂载 Caddy 配置文件
+      - ./caddy_data:/data # 存储 SSL 证书
+      - ./caddy_config:/config # 存储 Caddy 配置
+    networks:
+      - vue-network
+
+  renyimen:
+    build: ./renyimen # 构建 renyimen 目录中的 Dockerfile
+    container_name: renyimen
+    volumes:
+      - ./renyimen/dist:/usr/share/nginx/html # 挂载本地 dist 目录到容器
     networks:
       - vue-network
 
   luozhuohua11:
-    build: ./luozhuohua  # 构建 luozhuohua 目录中的 Dockerfile
+    build: ./luozhuohua # 构建 luozhuohua 目录中的 Dockerfile
     container_name: luozhuohua11
     volumes:
-      - ./luozhuohua/dist:/usr/share/nginx/html  # 挂载本地 dist 目录到容器
+      - ./luozhuohua/dist:/usr/share/nginx/html # 挂载本地 dist 目录到容器
     networks:
       - vue-network
 
   luozhuohua22:
-    build: ./luozhuohua2  # 构建 luozhuohua2 目录中的 Dockerfile
+    build: ./luozhuohua2 # 构建 luozhuohua2 目录中的 Dockerfile
     container_name: luozhuohua22
     volumes:
-      - ./luozhuohua2/dist:/usr/share/nginx/html  # 挂载本地 dist 目录到容器
+      - ./luozhuohua2/dist:/usr/share/nginx/html # 挂载本地 dist 目录到容器
     networks:
       - vue-network
 
   luozhuohua33:
-    build: ./luozhuohua3  # 构建 luozhuohua3 目录中的 Dockerfile
+    build: ./luozhuohua3 # 构建 luozhuohua3 目录中的 Dockerfile
     container_name: luozhuohua33
     volumes:
-      - ./luozhuohua3/dist:/usr/share/nginx/html  # 挂载本地 dist 目录到容器
+      - ./luozhuohua3/dist:/usr/share/nginx/html # 挂载本地 dist 目录到容器
     networks:
       - vue-network
 
   luozhuohua44:
-    build: ./luozhuohua4  # 构建 luozhuohua4 目录中的 Dockerfile
+    build: ./luozhuohua4 # 构建 luozhuohua4 目录中的 Dockerfile
     container_name: luozhuohua44
     volumes:
-      - ./luozhuohua4/dist:/usr/share/nginx/html  # 挂载本地 dist 目录到容器
+      - ./luozhuohua4/dist:/usr/share/nginx/html # 挂载本地 dist 目录到容器
     networks:
       - vue-network
 
   luozhuohua55:
-    build: ./luozhuohua5  # 构建 luozhuohua5 目录中的 Dockerfile
+    build: ./luozhuohua5 # 构建 luozhuohua5 目录中的 Dockerfile
     container_name: luozhuohua55
     volumes:
-      - ./luozhuohua5/dist:/usr/share/nginx/html  # 挂载本地 dist 目录到容器
+      - ./luozhuohua5/dist:/usr/share/nginx/html # 挂载本地 dist 目录到容器
     networks:
       - vue-network
 
 networks:
   vue-network:
-    driver: bridge  # 使用桥接网络
+    driver: bridge # 使用桥接网络
