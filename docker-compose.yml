@@ -19,7 +19,7 @@ services:
     build: ./index # 构建 index 目录中的 Dockerfile
     container_name: index
     volumes:
-      - ./index.html:/usr/share/nginx/html # 挂载本地 dist 目录到容器
+      - ./index/index.html:/usr/share/nginx/html # 挂载本地 dist 目录到容器
     networks:
       - vue-network
 
