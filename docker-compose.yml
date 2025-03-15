@@ -71,6 +71,18 @@ services:
     networks:
       - vue-network
 
+  # 静态资源服务
+  static:
+    build: ./static
+    container_name: static
+    restart: unless-stopped
+    volumes:
+      - ./static:/usr/share/nginx/static  # 挂载静态资源目录
+    networks:
+      - vue-network
+    expose:
+      - "80"  # 暴露静态服务的 80 端口
+
 networks:
   vue-network:
     driver: bridge # 使用桥接网络

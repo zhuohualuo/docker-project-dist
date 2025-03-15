@@ -1,27 +1,36 @@
+# 配置根域名和各个路径的访问
+
+# 根域名 (直接访问) luozhuohua.top
+# 根域名 (本地直接访问) localhost
 luozhuohua.top {
-    reverse_proxy index:80  # 让 `luozhuohua.top` 直接访问 `index`
+    # 默认访问 index
+    reverse_proxy / index:80
 
-    handle_path /renyimen/* {
-        reverse_proxy renyimen:80
-    }
+    # 处理 /renyimen 路径
+    reverse_proxy /renyimen/*  renyimen:80
 
-    handle_path /luozhuohua/* {
-        reverse_proxy luozhuohua11:80
-    }
-    
-    handle_path /luozhuohua2/* {
-        reverse_proxy luozhuohua22:80
-    }
-    
-    handle_path /luozhuohua3/* {
-        reverse_proxy luozhuohua33:80
-    }
+    # 处理 /luozhuohua11 路径
+    reverse_proxy /luozhuohua11/* luozhuohua11:80
 
-    handle_path /luozhuohua4/* {
-        reverse_proxy luozhuohua44:80
-    }
+    # 处理 /luozhuohua22 路径
+    reverse_proxy /luozhuohua22/* luozhuohua22:80
 
-    handle_path /luozhuohua5/* {
-        reverse_proxy luozhuohua55:80
-    }
+    # 处理 /luozhuohua33 路径
+    reverse_proxy /luozhuohua33/* luozhuohua33:80
+
+    # 处理 /luozhuohua44 路径
+    reverse_proxy /luozhuohua44/* luozhuohua44:80
+
+    # 处理 /luozhuohua55 路径
+    reverse_proxy /luozhuohua55/* luozhuohua55:80
+
+    # 处理 /static 路径，提供共享静态资源
+    reverse_proxy /static/* static:80
+
+    # 启用 HTTPS 和 SSL，在luozhuohua.top使用
+    tls luo_zhuohua@163.com  # 记得替换成你的邮件地址
+
+    # 使用自签名的本地证书，在localhost使用
+    # tls internal
+
 }
